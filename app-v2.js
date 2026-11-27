@@ -90,7 +90,7 @@ function renderToday(){
   $('#questionList').innerHTML=visible.length?visible.map(q=>questionCard(q,qs.indexOf(q),'today')).join(''):`<div class="empty">${todayStatus==='未答'?'这一组已经答完。去“已答”里回看，或到完整题库继续练习。':'这一组还没有作答记录。'}</div>`;
   $('#filters').querySelectorAll('button').forEach(b=>b.onclick=()=>{todayFilter=b.dataset.todayType;renderToday()});
   $('#statusFilters').querySelectorAll('button').forEach(b=>b.onclick=()=>{todayStatus=b.dataset.status;renderToday()});
-  bindQuestionButtons($('#questionList'),qs.map(q=>q.id),'today');
+  bindQuestionButtons($('#questionList'),visible.map(q=>q.id),'today');
 }
 function renderExam(){
   const qs=examQuestions(),done=qs.map(q=>({q,r:examLatest(q.id)})).filter(x=>x.r),earned=done.reduce((n,{q,r})=>n+(awarded(r,q)??0),0);
@@ -113,8 +113,10 @@ function renderBank(){
   $('#areaFilters').querySelectorAll('button').forEach(b=>b.onclick=()=>{bankArea=b.dataset.area;renderBank()});
 }
 function countTyped(text){return Array.from(text.replace(/\s/g,'')).length}
-function studyNav(){return `<div class="study-nav"><button type="button" class="quiet" data-move="-1" ${studyIndex<=0?'disabled':''}>上一题</button><span>${studyIndex+1} / ${studyQueue.length}</span><button type="button" class="primary" data-move="1" ${studyIndex>=studyQueue.length-1?'disabled':''}>下一题</button></div>`}
-function bindStudyNav(){document.querySelectorAll('#answerDialog [data-move]').forEach(button=>button.onclick=()=>{const next=studyIndex+Number(button.dataset.move);if(next>=0&&next<studyQueue.length)openQuestion(studyQueue[next])})}
+function studyRecord(id){return activeMode==='exam'?examLatest(id):activeMode==='bank'?latestEver(id):latest(id)}
+function nextStudyIndex(direction){for(let i=studyIndex+direction;i>=0&&i<studyQueue.length;i+=direction){if(activeMode==='today'&&todayStatus==='已答'||!studyRecord(studyQueue[i]))return i}return -1}
+function studyNav(){return `<div class="study-nav"><button type="button" class="quiet" data-move="-1" ${nextStudyIndex(-1)<0?'disabled':''}>上一题</button><span>${studyIndex+1} / ${studyQueue.length}</span><button type="button" class="primary" data-move="1" ${nextStudyIndex(1)<0?'disabled':''}>下一道未答</button></div>`}
+function bindStudyNav(){document.querySelectorAll('#answerDialog [data-move]').forEach(button=>button.onclick=()=>{const next=nextStudyIndex(Number(button.dataset.move));if(next>=0)openQuestion(studyQueue[next])})}
 function simpleHint(q){if(q.type!=='选择题')return q.tip;if(/谁|哪位|设计者|人物/.test(q.title))return '先想相关运动或流派，再想它的代表人物。';if(/年份|哪年|时期/.test(q.title))return '先放回设计史时间线，再判断前后顺序。';return '先抓住题干中的核心概念，再排除与该概念目标或特征相反的选项。'}
 function openQuestion(id,queue,mode){
   if(mode)activeMode=mode;
