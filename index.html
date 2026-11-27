@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f8fc">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="337练习">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <title>337 工业设计工程 · 每日练习与模拟卷</title>
+  <meta name="description" content="广东工业大学337工业设计工程：每日练习、150分模拟、按点批改与历史复盘">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brandmark">337</span><span>工业设计工程<br><small>每日主动回忆</small></span></div>
+    <nav aria-label="主导航">
+      <button class="nav active" data-view="today">今日练习</button>
+      <button class="nav" data-view="exam">150分模拟</button>
+      <button class="nav" data-view="bank">完整题库</button>
+      <button class="nav" data-view="history">历史记录</button>
+      <button class="nav" data-view="sources">资料说明</button>
+    </nav>
+    <div class="side-note">先回忆，再看答案。<br>把知识点写成得分点。</div>
+  </aside>
+  <main>
+    <header class="top"><div><p class="eyebrow" id="todayDate"></p><h1 id="pageTitle">今日练习</h1></div><div class="top-right"><span class="pill">公开练习网站</span><button class="quiet" id="importBtn">导入记录</button><button class="quiet" id="exportBtn">导出记录</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></header>
+    <section id="todayView">
+      <div class="hero"><div><p class="eyebrow">TODAY'S PRACTICE</p><h2>把知识点，写成得分点。</h2><p>每天 20 道混合训练题。先独立回忆，再逐点核对；需要整卷训练时进入“150分模拟”。</p><small class="hero-nudge">记住一点，就比昨天多一点。</small></div><div class="hero-score"><strong id="doneNum">0</strong><span>/ 20 已完成</span></div></div>
+      <div class="stats"><div><span>今日进度</span><strong id="progressText">0 / 20</strong><div class="bar"><i id="progressBar"></i></div></div><div><span>今日平均覆盖率</span><strong id="averageText">—</strong><small>仅供自测</small></div><div><span>待加强</span><strong id="weakText">0</strong><small>要点覆盖低于 70%</small></div></div>
+      <div class="section-head"><div><h2>今日 20 题</h2><p>适合碎片时间练习；每题标出分值</p></div><div class="filters" id="filters"></div></div>
+      <div id="statusFilters" class="filters status-filters"></div><div id="todayQuestionMap" class="question-map" aria-label="今日20题答题导航"></div><div id="questionList" class="question-list"></div>
+    </section>
+    <section id="examView" hidden>
+      <div class="hero exam-hero"><div><p class="eyebrow">150-POINT PRACTICE</p><h2>按卷面分值，完整演练。</h2><p>依据你提供的 2024 配分图组卷：选择 10×2，名词 6×5，简答 5×10，论述 2×25。此配比用于模拟训练，不代表每年固定不变。</p></div><div class="hero-score"><strong>150</strong><span>分模拟卷</span></div></div>
+      <div class="exam-metrics"><div><span>作答进度</span><strong id="examDone">0 / 23 题</strong></div><div><span>已得估分</span><strong id="examScore">0 / 150 分</strong></div></div>
+      <div id="examQuestionMap" class="question-map" aria-label="150分模拟卷答题卡"></div><div id="examQuestionList" class="question-list"></div>
+    </section>
+    <section id="bankView" hidden><div class="section-head"><div><h2>完整题库</h2><p id="bankCount"></p></div></div><div class="bank-tools"><input id="bankSearch" type="search" placeholder="搜索考点、题目或资料" aria-label="搜索题库"><div class="filters" id="bankFilters"></div></div><div class="filters area-filters" id="areaFilters"></div><div id="bankList" class="question-list"></div></section>
+    <section id="historyView" hidden><div class="section-head"><div><h2>历史记录</h2><p>保留时间、原答案、参考答案、得分点和估分。</p></div><button class="quiet" id="clearBtn">清空记录</button></div><div id="historyStats" class="history-stats"></div><div class="history-search"><input id="historySearch" type="search" placeholder="搜索题目、答案或日期" aria-label="搜索历史记录"></div><div id="historyList"></div></section>
+    <section id="sourcesView" hidden><div class="source-card"><h2>资料与评分说明</h2><p>2024 配分图显示 150 分：10 道选择题（每题 2 分）、6 道名词解释（每题 5 分）、5 道简答题（每题 10 分）、2 道论述题（每题 25 分）。你提供的 2021 试卷截图显示选择题每题 2 分、共 10 道。模拟卷采用 2024 图中的配比；学校官方大纲只列题型与总分，未承诺每年题量固定。</p><p>主观题按可见要点分配参考分值，关键词匹配只适合检查要点是否出现，不能代替老师阅卷。答题框架帮助组织表达；完整参考答案、精进衔接句和逐点结果会在提交后显示。原资料和网络资料均可能有误，重要史实请以原书核对。</p><p>手机浏览器可以直接使用这个网站，也可以将网页添加到主屏幕。历史记录保存在每台设备各自的浏览器中；换手机或浏览器时，可用页面右上角“导出记录 / 导入记录”迁移。清理浏览器数据前请先导出备份。</p><div class="trend"><h3>出题依据</h3><p>你提供的 2021—2026 真题整理用于选择考点和练习题型。2024 的答题示例提示：名词解释通常先界定再写背景、特征、代表与意义；简答突出分点；论述围绕观点、案例与影响组织完整段落。图片中“人工智能”等分析文字是备考建议，本站不会把它当作真题标准答案。</p><p><a href="https://yzw.gdut.edu.cn/2024dagang-337.pdf" target="_blank" rel="noopener">广工 2024 官方大纲</a>列出基本概念、设计史、前沿趋势，以及选择、词语解释、简答和论述四类题型。<a href="https://yzw.gdut.edu.cn/__local/B/C9/7B/8954EFC34F9AAACE6287DBE4687_66726E8E_36343.pdf" target="_blank" rel="noopener">广工参考书目</a>列出柳冠中《设计方法论》、何人可《工业设计史》、布尔德克《产品设计》及库伯《交互设计精髓》。网上回忆题只供趋势研究，改编练习题不标作真题原题。</p><p>新增史实核对参考<a href="https://www.chnmuseum.cn/zp/zpml/gjwxbt/202203/t20220301_254061.shtml" target="_blank" rel="noopener">中国国家博物馆《天工开物》介绍</a>与<a href="https://www.nlc.cn/nmcb/gonggao/20210628_202456.shtml" target="_blank" rel="noopener">国家典籍博物馆资料</a>。</p></div><h3>题库标注的资料</h3><div id="sourceList"></div></div></section>
+  </main>
+</div>
+<nav class="mobile-nav" aria-label="手机导航"><button class="nav active" data-view="today">今日</button><button class="nav" data-view="exam">模拟</button><button class="nav" data-view="bank">题库</button><button class="nav" data-view="history">历史</button><button class="nav" data-view="sources">资料</button></nav>
+<dialog id="answerDialog"><form method="dialog"><button class="close" aria-label="关闭">×</button></form><div id="dialogContent"></div></dialog>
+<dialog id="photoDialog"><form method="dialog"><button class="photo-close" aria-label="关闭照片">关闭</button></form><img id="photoLarge" alt="放大的手写答卷"></dialog>
+<script src="questions.js"></script><script src="choices.js"></script><script src="choices-extra.js"></script><script src="choices-country.js"></script><script src="written-extra.js"></script><script src="image-drills.js"></script><script src="exam-additions.js"></script><script src="choice-deep.js"></script><script src="photo-store.js"></script><script src="app-v2.js"></script>
+</body>
+</html>
